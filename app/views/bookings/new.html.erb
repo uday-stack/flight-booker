@@ -1,0 +1,26 @@
+<p>
+  Date of the flight - <%= @flight.start_time %>
+</p>
+<p>
+  From - <%= @flight.from_airport.code %>
+</p>
+<p>
+  To - <%= @flight.to_airport.code %>
+</p>
+<p>
+  Flight - <%= @flight.name %>
+</p>
+<%= form_for(@booking) do |f| %>
+<% @booking.passengers.each do |passenger| %>
+    <%= f.fields_for(passenger) do |passenger_info| %>
+    <p>
+      <%= passenger_info.label :name %>
+      <%= passenger_info.text_field :name %>
+
+      <%= passenger_info.label :email %>
+      <%= passenger_info.text_field :email %>    
+    </p>
+    <% end %>
+  <% end %>
+  <%= f.submit('Submit') %>
+<% end %>

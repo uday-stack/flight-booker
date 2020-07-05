@@ -1,0 +1,19 @@
+<%= form_tag("/flights", method: "get") do %>
+  <%= label_tag(:q, "Search for flights:") %>
+  <%= select_tag(:from_airport, options_for_select(@airports)) %>
+  <%= select_tag(:to_airport, options_for_select(@airports)) %>
+  <%= select_tag(:passenger_count, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4]])) %>
+  <%= select_tag(:date, options_for_select(@dates)) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<% if !@flights.nil? %>
+  <%= form_tag("bookings/new", method: "get") do %>
+  <input type="hidden" name="count" value="<%= @passenger_count %>">
+    <% @flights.each do |flight| %>
+      <%= radio_button_tag("flight", flight.id) %>
+      <%= label_tag(:flight, flight.name) %>
+    <% end %>
+    <%= submit_tag("Proceed") %>
+  <% end %>
+<% end %>
